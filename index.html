@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Registration Form</title>
+  <style>
+    /* Simple modern styling */
+    :root{
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --accent: #4f46e5;
+      --muted: #6b7280;
+      --danger: #ef4444;
+      --success: #10b981;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    body{
+      margin:0;
+      background: linear-gradient(180deg, var(--bg), #eef2ff 60%);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      color:#111827;
+    }
+    .container{
+      width:100%;
+      max-width:900px;
+      background:var(--card);
+      border-radius:12px;
+      box-shadow:0 8px 30px rgba(15,23,42,0.08);
+      padding:28px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:20px;
+    }
+    h1{ margin:0 0 8px 0; font-size:20px; }
+    p.lead { margin:0 0 16px 0; color:var(--muted); font-size:14px; }
+    .field { display:flex; flex-direction:column; margin-bottom:12px; }
+    label { font-size:13px; margin-bottom:6px; color:#111827; }
+    input[type="text"], input[type="email"], input[type="password"], input[type="tel"], input[type="date"], select, textarea {
+      padding:10px 12px;
+      border:1px solid #e6e9ef;
+      border-radius:8px;
+      font-size:14px;
+      outline:none;
+      transition:box-shadow .15s, border-color .15s;
+      background:#fff;
+    }
+    input:focus, select:focus, textarea:focus { box-shadow:0 0 0 4px rgba(79,70,229,0.06); border-color:var(--accent); }
+    .half { display:flex; gap:12px; }
+    .half .field { flex:1; margin-bottom:0; }
+    .small { font-size:12px; color:var(--muted); }
+    .row { grid-column: 1 / -1; display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:8px; }
+    .checkbox { display:flex; align-items:center; gap:8px; }
+    button {
+      background:var(--accent);
+      color:white;
+      border:none;
+      padding:10px 16px;
+      border-radius:10px;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow:0 6px 18px rgba(79,70,229,0.12);
+    }
+    button:disabled { opacity:0.6; cursor:not-allowed; }
+    .errors { color:var(--danger); font-size:13px; margin-top:6px; }
+    .success { color:var(--success); font-size:14px; margin-top:6px; }
+    /* Responsive */
+    @media (max-width:720px){
+      .container{ grid-template-columns: 1fr; padding:18px; }
+      .row { flex-direction:column; align-items:stretch; }
+    }
+  </style>
+</head>
+<body>
+  <form id="regForm" class="container" novalidate>
+    <div>
+      <h1>Registration Form</h1>
+      <p class="lead">Apna basic information fill karo — form client-side validation karta hai.</p>
+
+      <div class="field">
+        <label for="fullname">Full name *</label>
+        <input id="fullname" name="fullname" type="text" placeholder="Aapka naam" required />
+        <div class="errors" id="err-name" aria-live="polite"></div>
+      </div>
+
+      <div class="field">
+        <label for="email">Email *</label>
+        <input id="email" name="email" type="email" placeholder="you@example.com" required />
+        <div class="errors" id="err-email" aria-live="polite"></div>
+      </div>
+
+      <div class="half" style="margin-top:6px;">
+        <div class="field">
+          <label for="phone">Phone *</label>
+          <input id="phone" name="phone" type="tel" placeholder="10 digit number" required />
+          <div class="errors" id="err-phone" aria-live="polite"></div>
+        </div>
+        <div class="field">
+          <label for="dob">Date of Birth</label>
+          <input id="dob" name="dob" type="date" />
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:8px;">
+        <label for="gender">Gender</label>
+        <select id="gender" name="gender">
+          <option value="">Select</option>
+          <option>Female</option>
+          <option>Male</option>
+          <option>Non-binary</option>
+          <option>Prefer not to say</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="address">Address</label>
+        <textarea id="address" name="address" rows="3" placeholder="City, State, Pincode..."></textarea>
+      </div>
+    </div>
+
+    <div>
+      <h1 style="font-size:18px;">Account details</h1>
+      <p class="small">Strong password recommended (min 8 chars, uppercase, number).</p>
+
+      <div class="field">
+        <label for="username">Username *</label>
+        <input id="username" name="username" type="text" placeholder="username" required />
+        <div class="errors" id="err-username" aria-live="polite"></div>
+      </div>
+
+      <div class="field">
+        <label for="password">Password *</label>
+        <input id="password" name="password" type="password" placeholder="Password" required />
+        <div class="errors" id="err-password" aria-live="polite"></div>
+        <div class="small" id="pwd-hint">Min 8 chars, include uppercase & number.</div>
+      </div>
+
+      <div class="field">
+        <label for="confirm">Confirm Password *</label>
+        <input id="confirm" name="confirm" type="password" placeholder="Confirm password" required />
+        <div class="errors" id="err-confirm" aria-live="polite"></div>
+      </div>
+
+      <div class="field">
+        <label for="course">Course / Interest</label>
+        <select id="course" name="course">
+          <option value="">Choose one</option>
+          <option>BCA</option>
+          <option>B.Tech</option>
+          <option>MBA</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div style="margin-top:12px;">
+        <label class="checkbox">
+          <input id="agree" name="agree" type="checkbox" />
+          <span>I agree to terms and conditions *</span>
+        </label>
+        <div class="errors" id="err-agree" aria-live="polite"></div>
+      </div>
+
+      <div class="row" style="margin-top:18px;">
+        <div>
+          <button type="submit" id="submitBtn">Register</button>
+        </div>
+        <div style="text-align:right;">
+          <div id="resultMessage" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <script>
+    // Simple client-side validation & demo submit handling
+    const form = document.getElementById('regForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const result = document.getElementById('resultMessage');
+
+    function showError(id, msg) {
+      document.getElementById(id).textContent = msg || '';
+    }
+
+    function validateEmail(email) {
+      // basic but decent regex
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function validatePhone(phone) {
+      // Accept 10 digit Indian style numbers (allow +91 or leading 0 optionally)
+      const cleaned = phone.replace(/\s|-/g, '');
+      return /^(?:\+91|0)?[6-9]\d{9}$/.test(cleaned);
+    }
+
+    function checkPasswordStrength(pwd) {
+      const minLen = pwd.length >= 8;
+      const hasUpper = /[A-Z]/.test(pwd);
+      const hasLower = /[a-z]/.test(pwd);
+      const hasNum = /[0-9]/.test(pwd);
+      // const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(pwd);
+      return { ok: minLen && hasUpper && hasLower && hasNum, minLen, hasUpper, hasLower, hasNum };
+    }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      // Clear previous messages
+      showError('err-name',''); showError('err-email',''); showError('err-phone','');
+      showError('err-username',''); showError('err-password',''); showError('err-confirm','');
+      showError('err-agree',''); result.textContent='';
+
+      let valid = true;
+      const name = form.fullname.value.trim();
+      const email = form.email.value.trim();
+      const phone = form.phone.value.trim();
+      const username = form.username.value.trim();
+      const password = form.password.value;
+      const confirm = form.confirm.value;
+      const agree = form.agree.checked;
+
+      if (!name) { showError('err-name','Name is required'); valid = false; }
+      if (!email || !validateEmail(email)) { showError('err-email','Valid email required'); valid = false; }
+      if (!phone || !validatePhone(phone)) { showError('err-phone','Valid 10-digit phone required'); valid = false; }
+      if (!username || username.length < 3) { showError('err-username','Username min 3 characters'); valid = false; }
+
+      const pwdCheck = checkPasswordStrength(password);
+      if (!password) { showError('err-password','Password required'); valid = false; }
+      else if (!pwdCheck.ok) {
+        // give some guidance
+        showError('err-password','Password must be min 8 chars, include uppercase & number');
+        valid = false;
+      }
+
+      if (password !== confirm) { showError('err-confirm','Passwords do not match'); valid = false; }
+
+      if (!agree) { showError('err-agree','You must agree to the terms'); valid = false; }
+
+      if (!valid) {
+        result.innerHTML = '<span style="color:#ef4444">Please fix errors above.</span>';
+        return;
+      }
+
+      // If valid: demo success behavior (normally you'd send to server via fetch/XHR)
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Registering...';
+
+      // Demo: create a small object of collected data (DO NOT send password in plaintext in real apps)
+      const payload = {
+        fullname: name,
+        email,
+        phone,
+        username,
+        dob: form.dob.value || null,
+        gender: form.gender.value || null,
+        address: form.address.value || null,
+        course: form.course.value || null,
+        createdAt: new Date().toISOString()
+      };
+
+      // Simulate server delay with setTimeout (only for demo). Replace with fetch() in real app.
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Register';
+        result.innerHTML = '<span style="color: #10b981; font-weight:600">Registration successful!</span>';
+        console.log('Demo payload (send to server):', payload);
+        // Optionally clear form:
+        // form.reset();
+      }, 900);
+    });
+
+    // Optional: live validation examples
+    document.getElementById('email').addEventListener('input', e => {
+      const v = e.target.value.trim();
+      showError('err-email', v && !validateEmail(v) ? 'Email looks invalid' : '');
+    });
+    document.getElementById('phone').addEventListener('input', e => {
+      const v = e.target.value.trim();
+      showError('err-phone', v && !validatePhone(v) ? 'Phone looks invalid' : '');
+    });
+    document.getElementById('password').addEventListener('input', e => {
+      const v = e.target.value;
+      const c = checkPasswordStrength(v);
+      if (!v) showError('err-password','');
+      else if (!c.ok) showError('err-password','Weak password (min 8 chars, uppercase & number)');
+      else showError('err-password','');
+    });
+  </script>
+</body>
+</html>
